@@ -11,7 +11,7 @@ import static models.Fixtures.users;
 public class UserTest
 {
   User homer = new User ("homer", "simpson", "homer@simpson.com",  "secret");
-  
+
   @Test
   public void testCreate()
   {
@@ -20,7 +20,7 @@ public class UserTest
     assertEquals ("homer@simpson.com",   homer.email);   
     assertEquals ("secret",              homer.password);   
   }
-  
+
   @Test
   public void testIds()
   {
@@ -31,7 +31,7 @@ public class UserTest
     }
     assertEquals (users.length, ids.size());
   }
-  
+
   @Test
   public void testToString()
   {
