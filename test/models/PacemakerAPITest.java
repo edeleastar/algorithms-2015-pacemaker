@@ -28,9 +28,23 @@ public class PacemakerAPITest
   }
   
   @Test
-  public void testUser()
+  public void testUserEmpty()
   {
     assertEquals (0, pacemaker.getUsers().size());
   } 
+  
+  @Test
+  public void testUser()
+  {
+    User homer = new User ("homer", "simpson", "homer@simpson.com",  "secret");
+    
+    assertEquals (0, pacemaker.getUsers().size());
+    pacemaker.createUser("homer", "simpson", "homer@simpson.com", "secret");
+    assertEquals (1, pacemaker.getUsers().size());
+    
+    assertEquals (homer, pacemaker.getUserByEmail("homer@simpson.com"));
+  }
+  
+  
 }
 
