@@ -1,12 +1,19 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Collection;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import models.User;
 
 public class Main
 {
-  public static void main(String[] args) throws IOException
+  public static void main(String[] args) throws Exception
   {    
     PacemakerAPI pacemakerAPI = new PacemakerAPI();
     
@@ -23,5 +30,7 @@ public class Main
     pacemakerAPI.deleteUser(homer.id);
     users = pacemakerAPI.getUsers();
     System.out.println(users);
+    
+    pacemakerAPI.store(new File("datastore.xml")); 
   }
 }
