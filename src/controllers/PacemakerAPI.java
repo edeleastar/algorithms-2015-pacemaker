@@ -1,62 +1,47 @@
 package controllers;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Collection;
-
 import com.google.common.base.Optional;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import utils.Serializer;
 import models.Activity;
 import models.Location;
 import models.User;
 
 public class PacemakerAPI
 {
+  private Serializer serializer;
+  
   private Map<Long,   User>   userIndex       = new HashMap<>();
   private Map<String, User>   emailIndex      = new HashMap<>();
   private Map<Long, Activity> activitiesIndex = new HashMap<>();
       
   public PacemakerAPI()
+  {}
+  
+  public PacemakerAPI(Serializer serializer)
   {
+    this.serializer = serializer;
   }
   
   @SuppressWarnings("unchecked")
-  void load(File file) throws Exception
+  public void load() throws Exception
   {
-    ObjectInputStream is = null;
-    try
-    {
-      XStream xstream = new XStream(new DomDriver());
-      is = xstream.createObjectInputStream(new FileReader(file));
-      userIndex       = (Map<Long, User>)     is.readObject();
-      emailIndex      = (Map<String, User>)   is.readObject();
-      activitiesIndex = (Map<Long, Activity>) is.readObject();
-    }
-    finally
-    {
-      if (is != null)
-      {
-        is.close();
-      }
-    }
+    serializer.read();
+    activitiesIndex = (Map<Long, Activity>) serializer.pop();
+    emailIndex      = (Map<String, User>)   serializer.pop();
+    userIndex       = (Map<Long, User>)     serializer.pop();
   }
   
-  void store(File file) throws Exception
+  void store() throws Exception
   {
-    XStream xstream = new XStream(new DomDriver());
-    ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter(file));
-    out.writeObject(userIndex);
-    out.writeObject(emailIndex);
-    out.writeObject(activitiesIndex);
-    out.close(); 
+    serializer.push(userIndex);
+    serializer.push(emailIndex);
+    serializer.push(activitiesIndex);
+    serializer.write(); 
   }
   
   public Collection<User> getUsers ()
