@@ -1,4 +1,4 @@
-package models;
+package controllers;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import controllers.PacemakerAPI;
+import models.Activity;
+import models.Location;
+import models.User;
+
 import static models.Fixtures.users;
 import static models.Fixtures.activities;
 import static models.Fixtures.locations;

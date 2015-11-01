@@ -1,9 +1,8 @@
-package models;
+package controllers;
 import controllers.PacemakerAPI;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.util.Collection;
 
 import models.Activity;
 import models.Location;
@@ -13,7 +12,6 @@ import org.junit.Test;
 
 import utils.Serializer;
 import utils.XMLSerializer;
-import controllers.PacemakerAPI;
 import static models.Fixtures.users;
 import static models.Fixtures.activities;
 import static models.Fixtures.locations;
