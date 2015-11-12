@@ -3,11 +3,15 @@ package controllers;
 import java.io.File;
 import java.util.Collection;
 
+import com.google.common.base.Optional;
+
 import utils.Serializer;
 import utils.XMLSerializer;
 import asg.cliche.Command;
+import asg.cliche.Param;
 import asg.cliche.Shell;
 import asg.cliche.ShellFactory;
+import models.Activity;
 import models.User;
 
 
@@ -33,6 +37,31 @@ public class Main
     Collection<User> users = paceApi.getUsers();
     System.out.println(users);
   }
+  
+  @Command(description="Create a new User")
+  public void createUser (@Param(name="first name") String firstName, @Param(name="last name") String lastName, 
+                          @Param(name="email")      String email,     @Param(name="password")  String password)
+  {
+    paceApi.createUser(firstName, lastName, email, password);
+  }
+  
+  @Command(description="Get a Users detail")
+  public void getUser (@Param(name="email") String email)
+  {
+    User user = paceApi.getUserByEmail(email);
+    System.out.println(user);
+  }
+  
+  @Command(description="Delete a User")
+  public void deleteUser (@Param(name="email") String email)
+  {
+    Optional<User> user = Optional.fromNullable(paceApi.getUserByEmail(email));
+    if (user.isPresent())
+    {
+      paceApi.deleteUser(user.get().id);
+    }
+  }
+
   
   public static void main(String[] args) throws Exception
   {
