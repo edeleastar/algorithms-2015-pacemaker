@@ -1,42 +1,36 @@
 package controllers;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.Collection;
-
 import utils.Serializer;
 import utils.XMLSerializer;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
+import asg.cliche.Shell;
+import asg.cliche.ShellFactory;
 
-import models.User;
 
 public class Main
 {
-  public static void main(String[] args) throws Exception
-  {    
-    File  datastore = new File("datastore3.xml");
+  public PacemakerAPI paceApi;
+
+  public Main() throws Exception
+  {
+    File datastore = new File("datastore.xml");
     Serializer serializer = new XMLSerializer(datastore);
-    
-    PacemakerAPI pacemakerAPI = new PacemakerAPI(serializer);
+
+    paceApi = new PacemakerAPI(serializer);
     if (datastore.isFile())
     {
-      pacemakerAPI.load();
+      paceApi.load();
     }
-    
-    pacemakerAPI.createUser("Bart", "Simpson",   "bart@simpson.com", "secret");
-    pacemakerAPI.createUser("Homer", "Simpson",  "homer@simpson.com", "secret");
-    pacemakerAPI.createUser("Lisa", "Simpson", " lisa@simpson.com", "secret");
+  }
 
-    Collection<User> users = pacemakerAPI.getUsers();
-    System.out.println(users);
-    
-    User homer = pacemakerAPI.getUserByEmail("homer@simpson.com");
-    pacemakerAPI.createActivity(homer.id, "walk", "tramore", 1000);
-    
-    pacemakerAPI.store(); 
+  public static void main(String[] args) throws Exception
+  {
+    Main main = new Main();
+
+    Shell shell = ShellFactory.createConsoleShell("pm", "Welcome to pacemaker-console - ?help for instructions", main);
+    shell.commandLoop();
+
+    main.paceApi.store();
   }
 }
