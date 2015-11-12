@@ -66,7 +66,7 @@ public class PersistenceTest
   public void testXMLSerializer() throws Exception
   { 
     String datastoreFile = "testdatastore.xml";
-    deleteFile (datastoreFile);
+    //deleteFile (datastoreFile);
     
     Serializer serializer = new XMLSerializer(new File (datastoreFile));
     
@@ -82,7 +82,7 @@ public class PersistenceTest
     {
       assertTrue (pacemaker2.getUsers().contains(user));
     }
-    deleteFile ("testdatastore.xml");
+    //deleteFile ("testdatastore.xml");
   }
   
   

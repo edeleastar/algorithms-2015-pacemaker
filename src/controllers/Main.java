@@ -1,11 +1,14 @@
 package controllers;
 
 import java.io.File;
+import java.util.Collection;
+
 import utils.Serializer;
 import utils.XMLSerializer;
-
+import asg.cliche.Command;
 import asg.cliche.Shell;
 import asg.cliche.ShellFactory;
+import models.User;
 
 
 public class Main
@@ -24,6 +27,13 @@ public class Main
     }
   }
 
+  @Command(description="Get all users details")
+  public void getUsers ()
+  {
+    Collection<User> users = paceApi.getUsers();
+    System.out.println(users);
+  }
+  
   public static void main(String[] args) throws Exception
   {
     Main main = new Main();
