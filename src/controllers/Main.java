@@ -62,7 +62,28 @@ public class Main
     }
   }
 
+  @Command(description="Add an activity")
+  public void addActivity (@Param(name="user-id")  Long   id,       @Param(name="type") String type, 
+                           @Param(name="location") String location, @Param(name="distance") double distance)
+  {
+    Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
+    if (user.isPresent())
+    {
+      paceApi.createActivity(id, type, location, distance);
+    }
+  }
   
+  @Command(description="Add Location to an activity")
+  public void addLocation (@Param(name="activity-id")  Long  id,   
+                           @Param(name="latitude")     float latitude, @Param(name="longitude") float longitude)
+  {
+    Optional<Activity> activity = Optional.fromNullable(paceApi.getActivity(id));
+    if (activity.isPresent())
+    {
+      paceApi.addLocation(activity.get().id, latitude, longitude);
+    }
+  }
+
   public static void main(String[] args) throws Exception
   {
     Main main = new Main();
