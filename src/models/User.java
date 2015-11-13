@@ -34,10 +34,11 @@ public class User
   public String toString()
   {
     return toStringHelper(this).addValue(id)
-    		                   .addValue(firstName)
+    		                       .addValue(firstName)
                                .addValue(lastName)
                                .addValue(password)
-                               .addValue(email)                               
+                               .addValue(email)   
+                               .addValue(activities)
                                .toString();
   }
   
