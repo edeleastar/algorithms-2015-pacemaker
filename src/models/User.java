@@ -1,10 +1,11 @@
 package models;
-import static com.google.common.base.MoreObjects.toStringHelper;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import com.google.common.base.Objects;
+
+import utils.ToJsonString;
 
 public class User 
 {
@@ -33,13 +34,7 @@ public class User
   
   public String toString()
   {
-    return toStringHelper(this).addValue(id)
-    		                       .addValue(firstName)
-                               .addValue(lastName)
-                               .addValue(password)
-                               .addValue(email)   
-                               .addValue(activities)
-                               .toString();
+    return new ToJsonString(getClass(), this).toString();
   }
   
   @Override  
